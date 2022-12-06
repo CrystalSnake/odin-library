@@ -1,4 +1,10 @@
-let myLibrary = [];
+let myLibrary = [
+  'Don Quixote',
+  'Moby Dick',
+  'War and Peace',
+  'Hamlet',
+  'The Odissey',
+];
 
 function Book(title, author, numberOfPages, readStatus) {
   this.title = title;
@@ -24,3 +30,19 @@ function addBookToLibrary(book) {
 addBookToLibrary(theHobbit);
 
 console.log(myLibrary);
+
+function displayMyLibrary() {
+  for (let book of myLibrary) {
+    console.log(book);
+    let bookCard = document.createElement('div');
+    bookCard.className = 'book-card';
+    console.log(bookCard);
+    let bookCardTitle = document.createElement('h2');
+    bookCardTitle.textContent = book;
+    console.log(bookCardTitle);
+    bookCard.appendChild(bookCardTitle);
+    document.body.appendChild(bookCard);
+  }
+}
+
+displayMyLibrary();
