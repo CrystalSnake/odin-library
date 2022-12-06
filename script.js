@@ -21,27 +21,22 @@ Book.prototype.info = function () {
 
 let theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
 
-console.log(theHobbit.info());
-
 function addBookToLibrary(book) {
   myLibrary.push(book.title);
 }
 
 addBookToLibrary(theHobbit);
 
-console.log(myLibrary);
+const container = document.querySelector('.container');
 
 function displayMyLibrary() {
   for (let book of myLibrary) {
-    console.log(book);
     let bookCard = document.createElement('div');
     bookCard.className = 'book-card';
-    console.log(bookCard);
     let bookCardTitle = document.createElement('h2');
     bookCardTitle.textContent = book;
-    console.log(bookCardTitle);
     bookCard.appendChild(bookCardTitle);
-    document.body.appendChild(bookCard);
+    container.appendChild(bookCard);
   }
 }
 
