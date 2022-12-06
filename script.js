@@ -1,3 +1,5 @@
+let myLibrary = [];
+
 function Book(title, author, numberOfPages, readStatus) {
   this.title = title;
   this.author = author;
@@ -14,3 +16,11 @@ Book.prototype.info = function () {
 let theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
 
 console.log(theHobbit.info());
+
+function addBookToLibrary(book) {
+  myLibrary.push(book.title);
+}
+
+addBookToLibrary(theHobbit);
+
+console.log(myLibrary);
