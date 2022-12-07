@@ -41,3 +41,9 @@ function displayMyLibrary() {
 }
 
 displayMyLibrary();
+
+const addBookButton = document.getElementById('add-book');
+
+addBookButton.addEventListener('click', () => {
+  console.log('test');
+});
