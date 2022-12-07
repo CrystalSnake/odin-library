@@ -45,5 +45,32 @@ displayMyLibrary();
 const addBookButton = document.getElementById('add-book');
 
 addBookButton.addEventListener('click', () => {
-  console.log('test');
+  createModal();
 });
+
+function createModal(options) {
+  const modal = document.createElement('div');
+  modal.classList.add('modal');
+  modal.insertAdjacentHTML(
+    'beforeend',
+    `
+		<div class="modal-overlay">
+		<div class="modal-window">
+			<div class="modal-header">
+				<span class="modal-title">Add book</span>
+				<span class="close">&times;</span>
+			</div>
+			<div class="modal-body">
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
+				saepe, voluptatum dolores distinctio veniam possimus aperiam? Quas
+				modi nam ab.
+			</div>
+			<div class="modal-footer">
+				<button type="submit">Add</button>
+			</div>
+		</div>
+	</div>
+	`
+  );
+  document.body.appendChild(modal);
+}

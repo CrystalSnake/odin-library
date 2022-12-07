@@ -1,6 +1,7 @@
 body {
   max-width: 960px;
   margin: auto;
+  font-family: sans-serif;
 }
 
 h1 {
@@ -14,7 +15,7 @@ header {
   align-items: center;
 }
 
-#add-book {
+button {
   background-color: teal;
   border: none;
   border-radius: 5px;
@@ -37,4 +38,38 @@ header {
   justify-content: center;
   border-radius: 10px;
   box-shadow: 3px 5px 5px lightslategray;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-window {
+  width: 600px;
+  border-radius: 5px;
+  background: white;
+  margin: 100px auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  background: lightgray;
+  border-radius: 5px 5px 0 0;
+}
+
+.close {
+  cursor: pointer;
+}
+
+.modal-header,
+.modal-body,
+.modal-footer {
+  padding: 15px;
 }
