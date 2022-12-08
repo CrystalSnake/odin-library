@@ -72,17 +72,17 @@ function createModal(options) {
 			<div class="form-container">
 			<form action="#" id="add-book-form" method="post">
 				<legend>Please fill all field below, then press "Add" button.</legend>
-				<div class="book-title-input">
+				<div class="modal-input">
 					<label for="book-title">Book title</label>
 					<input type="text" name="book-title" id="book-title" required />
 				</div>
 		
-				<div class="book-author-input">
+				<div class="modal-input">
 					<label for="book-author">Book author</label>
 					<input type="text" name="book-author" id="book-author" required />
 				</div>
 		
-				<div class="number-of-pages-input">
+				<div class="modal-input">
 					<label for="number-of-pages">Number of pages</label>
 					<input
 						type="number"
@@ -96,7 +96,7 @@ function createModal(options) {
 		</div>
 			</div>
 			<div class="modal-footer">
-				<button type="submit">Add</button>
+				<button type="submit" form="add-book-form">Add</button>
 			</div>
 		</div>
 	</div>
