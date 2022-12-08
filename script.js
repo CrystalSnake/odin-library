@@ -48,6 +48,14 @@ addBookButton.addEventListener('click', () => {
   createModal();
 });
 
+addBookButton.addEventListener('click', () => {
+  showModal();
+  const closeModalButton = document.getElementById('close-modal');
+  closeModalButton.addEventListener('click', () => {
+    closeModal();
+  });
+});
+
 function createModal(options) {
   const modal = document.createElement('div');
   modal.classList.add('modal');
@@ -58,12 +66,34 @@ function createModal(options) {
 		<div class="modal-window">
 			<div class="modal-header">
 				<span class="modal-title">Add book</span>
-				<span class="close">&times;</span>
+				<span id="close-modal">&times;</span>
 			</div>
 			<div class="modal-body">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
-				saepe, voluptatum dolores distinctio veniam possimus aperiam? Quas
-				modi nam ab.
+			<div class="form-container">
+			<form action="#" id="add-book-form" method="post">
+				<legend>Please fill all field below, then press "Add" button.</legend>
+				<div class="book-title-input">
+					<label for="book-title">Book title</label>
+					<input type="text" name="book-title" id="book-title" required />
+				</div>
+		
+				<div class="book-author-input">
+					<label for="book-author">Book author</label>
+					<input type="text" name="book-author" id="book-author" required />
+				</div>
+		
+				<div class="number-of-pages-input">
+					<label for="number-of-pages">Number of pages</label>
+					<input
+						type="number"
+						name="number-of-pages"
+						id="number-of-pages"
+						required
+					/>
+				</div>
+		
+			</form>
+		</div>
 			</div>
 			<div class="modal-footer">
 				<button type="submit">Add</button>
@@ -73,4 +103,14 @@ function createModal(options) {
 	`
   );
   document.body.appendChild(modal);
+}
+
+function showModal() {
+  const modal = document.querySelector('.modal');
+  modal.classList.add('open');
+}
+
+function closeModal() {
+  const modal = document.querySelector('.modal');
+  modal.classList.remove('open');
 }
