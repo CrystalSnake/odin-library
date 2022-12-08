@@ -54,6 +54,16 @@ addBookButton.addEventListener('click', () => {
   closeModalButton.addEventListener('click', () => {
     closeModal();
   });
+  const addBookSubmitButton = document.getElementById('add-book-submit');
+  addBookSubmitButton.addEventListener('click', stopDefAction, false);
+  const bookTitle = document.querySelector('#book-title');
+  const bookAuthor = document.querySelector('#book-author');
+  const bookPages = document.querySelector('#book-number-of-pages');
+  addBookSubmitButton.addEventListener('click', () => {
+    console.log(bookTitle.value);
+    console.log(bookAuthor.value);
+    console.log(bookPages.value);
+  });
 });
 
 function createModal(options) {
@@ -83,11 +93,11 @@ function createModal(options) {
 				</div>
 		
 				<div class="modal-input">
-					<label for="number-of-pages">Number of pages</label>
+					<label for="book-number-of-pages">Number of pages</label>
 					<input
 						type="number"
-						name="number-of-pages"
-						id="number-of-pages"
+						name="book-number-of-pages"
+						id="book-number-of-pages"
 						required
 					/>
 				</div>
@@ -96,7 +106,7 @@ function createModal(options) {
 		</div>
 			</div>
 			<div class="modal-footer">
-				<button type="submit" form="add-book-form">Add</button>
+				<button id="add-book-submit" type="submit" form="add-book-form">Add</button>
 			</div>
 		</div>
 	</div>
@@ -113,4 +123,8 @@ function showModal() {
 function closeModal() {
   const modal = document.querySelector('.modal');
   modal.classList.remove('open');
+}
+
+function stopDefAction(evt) {
+  evt.preventDefault();
 }
