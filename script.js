@@ -21,13 +21,16 @@ Book.prototype.createBookCard = function () {
   const container = document.querySelector('.container');
   let bookCard = document.createElement('div');
   bookCard.className = 'book-card';
-  bookCard.dataset.cardId = myLibrary.length;
   let bookCardTitle = document.createElement('h2');
   bookCardTitle.textContent = this.title;
   bookCard.appendChild(bookCardTitle);
   let buttonsCardContainer = document.createElement('div');
   let deleteBookButton = document.createElement('button');
-  deleteBookButton.className = 'book-card-button';
+  deleteBookButton.classList.add('book-card-button', 'delete-button');
+  deleteBookButton.addEventListener('click', () => {
+    deleteBookButton.parentElement.parentElement.remove();
+    console.log('click');
+  });
   let deleteIcon = document.createElement('img');
   deleteIcon.classList.add('book-card-icon', 'delete-icon');
   deleteIcon.src = './icons/delete.svg';
