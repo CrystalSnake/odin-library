@@ -59,10 +59,23 @@ addBookButton.addEventListener('click', () => {
   const bookTitle = document.querySelector('#book-title');
   const bookAuthor = document.querySelector('#book-author');
   const bookPages = document.querySelector('#book-number-of-pages');
+  const bookReadStatus = document.querySelector('#book-read-status');
   addBookSubmitButton.addEventListener('click', () => {
-    console.log(bookTitle.value);
-    console.log(bookAuthor.value);
-    console.log(bookPages.value);
+    let newBook = new Book(
+      bookTitle.value,
+      bookAuthor.value,
+      bookPages.value,
+      bookReadStatus.checked
+    );
+
+    addBookToLibrary(newBook);
+
+    let bookCard = document.createElement('div');
+    bookCard.className = 'book-card';
+    let bookCardTitle = document.createElement('h2');
+    bookCardTitle.textContent = newBook.title;
+    bookCard.appendChild(bookCardTitle);
+    container.appendChild(bookCard);
   });
 });
 
@@ -100,6 +113,11 @@ function createModal(options) {
 						id="book-number-of-pages"
 						required
 					/>
+				</div>
+
+				<div class="modal-input checkbox">
+					<label for="book-read-status">Have you read it?</label>
+					<input type="checkbox" name="book-read-status" id="book-read-status" required />
 				</div>
 		
 			</form>

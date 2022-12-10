@@ -95,6 +95,17 @@ legend {
   margin: 15px 0;
 }
 
+.modal-input.checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+#book-read-status {
+  width: 20px;
+  margin: 0 10px;
+}
+
 .modal-input input {
   display: block;
   height: 25px;
