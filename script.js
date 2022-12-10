@@ -21,45 +21,23 @@ Book.prototype.createBookCard = function () {
   const container = document.querySelector('.container');
   let bookCard = document.createElement('div');
   bookCard.className = 'book-card';
+  bookCard.dataset.cardId = myLibrary.length;
   let bookCardTitle = document.createElement('h2');
   bookCardTitle.textContent = this.title;
   bookCard.appendChild(bookCardTitle);
   let buttonsCardContainer = document.createElement('div');
   let deleteBookButton = document.createElement('button');
+  deleteBookButton.className = 'book-card-button';
+  let deleteIcon = document.createElement('img');
+  deleteIcon.classList.add('book-card-icon', 'delete-icon');
+  deleteIcon.src = './icons/delete.svg';
+  deleteBookButton.appendChild(deleteIcon);
   buttonsCardContainer.appendChild(deleteBookButton);
   bookCard.appendChild(buttonsCardContainer);
   container.appendChild(bookCard);
 };
 
-const addBookButton = document.getElementById('add-book');
-
-addBookButton.addEventListener('click', () => {
-  createModal();
-  closeModalHandler();
-});
-
-let submitListener = function () {
-  const addBookSubmitButton = document.getElementById('add-book-submit');
-  addBookSubmitButton.addEventListener('click', stopDefAction, false);
-  const title = document.querySelector('#book-title');
-  const author = document.querySelector('#book-author');
-  const numberOfPages = document.querySelector('#book-number-of-pages');
-  const readStatus = document.querySelector('#book-read-status');
-  addBookSubmitButton.addEventListener('click', () => {
-    let newBook = new Book(
-      title.value,
-      author.value,
-      numberOfPages.value,
-      readStatus.checked
-    );
-    newBook.add();
-    newBook.createBookCard();
-  });
-};
-
-addBookButton.addEventListener('click', submitListener, false);
-
-function createModal(options) {
+function createModal() {
   const modal = document.createElement('div');
   modal.classList.add('modal');
   modal.insertAdjacentHTML(
@@ -123,3 +101,28 @@ function closeModalHandler() {
 function stopDefAction(evt) {
   evt.preventDefault();
 }
+
+function submitListener() {
+  const addBookSubmitButton = document.getElementById('add-book-submit');
+  addBookSubmitButton.addEventListener('click', stopDefAction, false);
+  const title = document.querySelector('#book-title');
+  const author = document.querySelector('#book-author');
+  const numberOfPages = document.querySelector('#book-number-of-pages');
+  const readStatus = document.querySelector('#book-read-status');
+  addBookSubmitButton.addEventListener('click', () => {
+    let newBook = new Book(
+      title.value,
+      author.value,
+      numberOfPages.value,
+      readStatus.checked
+    );
+    newBook.add();
+    newBook.createBookCard();
+  });
+}
+
+const addBookButton = document.getElementById('add-book');
+
+addBookButton.addEventListener('click', createModal, false);
+addBookButton.addEventListener('click', closeModalHandler, false);
+addBookButton.addEventListener('click', submitListener, false);

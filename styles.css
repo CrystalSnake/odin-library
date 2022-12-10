@@ -23,6 +23,18 @@ button {
   width: 100px;
 }
 
+.book-card-button {
+  background-color: rgba(0, 0, 0, 0);
+  height: auto;
+  width: auto;
+  padding: 0;
+}
+
+.book-card-icon {
+  height: 30px;
+  width: 30px;
+}
+
 .container {
   margin: auto;
   display: grid;
