@@ -7,12 +7,6 @@ function Book(title, author, numberOfPages, readStatus) {
   this.readStatus = readStatus;
 }
 
-Book.prototype.info = function () {
-  return `${this.title} by ${this.author}, ${this.numberOfPages} pages, ${
-    this.readStatus ? 'read' : 'not read yet'
-  }`;
-};
-
 Book.prototype.add = function () {
   myLibrary.push(this.title);
 };
@@ -24,18 +18,35 @@ Book.prototype.createBookCard = function () {
   let bookCardTitle = document.createElement('h2');
   bookCardTitle.textContent = this.title;
   bookCard.appendChild(bookCardTitle);
+  // buttons
   let buttonsCardContainer = document.createElement('div');
+  //delete
   let deleteBookButton = document.createElement('button');
   deleteBookButton.classList.add('book-card-button', 'delete-button');
   deleteBookButton.addEventListener('click', () => {
     deleteBookButton.parentElement.parentElement.remove();
-    console.log('click');
   });
   let deleteIcon = document.createElement('img');
   deleteIcon.classList.add('book-card-icon', 'delete-icon');
   deleteIcon.src = './icons/delete.svg';
   deleteBookButton.appendChild(deleteIcon);
   buttonsCardContainer.appendChild(deleteBookButton);
+  //read status
+  let readBookButton = document.createElement('button');
+  readBookButton.classList.add('book-card-button', 'read-button');
+  readBookButton.addEventListener('click', () => {
+    console.log('click');
+  });
+  let readIcon = document.createElement('img');
+  readIcon.classList.add('book-card-icon', 'read-icon');
+  if (this.readStatus) {
+    readIcon.src = './icons/book-check.svg';
+  } else {
+    readIcon.src = './icons/book-cancel.svg';
+  }
+  readBookButton.appendChild(readIcon);
+  buttonsCardContainer.appendChild(readBookButton);
+  //assembly
   bookCard.appendChild(buttonsCardContainer);
   container.appendChild(bookCard);
 };
