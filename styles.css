@@ -25,14 +25,21 @@ button {
 
 .book-card-button {
   background-color: rgba(0, 0, 0, 0);
-  height: auto;
-  width: auto;
+  width: 30px;
+  height: 30px;
   padding: 0;
 }
 
-.book-card-icon {
-  height: 30px;
-  width: 30px;
+.delete-button {
+  background-image: url(./icons/delete.svg);
+}
+
+.read-button {
+  background-image: url(./icons/book-cancel.svg);
+}
+
+.read-button.read-true {
+  background-image: url(./icons/book-check.svg);
 }
 
 .container {

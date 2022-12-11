@@ -26,25 +26,22 @@ Book.prototype.createBookCard = function () {
   deleteBookButton.addEventListener('click', () => {
     deleteBookButton.parentElement.parentElement.remove();
   });
-  let deleteIcon = document.createElement('img');
-  deleteIcon.classList.add('book-card-icon', 'delete-icon');
-  deleteIcon.src = './icons/delete.svg';
-  deleteBookButton.appendChild(deleteIcon);
   buttonsCardContainer.appendChild(deleteBookButton);
   //read status
   let readBookButton = document.createElement('button');
-  readBookButton.classList.add('book-card-button', 'read-button');
+  if (this.readStatus) {
+    readBookButton.classList.add(
+      'book-card-button',
+      'read-button',
+      'read-true'
+    );
+  } else {
+    readBookButton.classList.add('book-card-button', 'read-button');
+  }
   readBookButton.addEventListener('click', () => {
     console.log('click');
+    readBookButton.classList.toggle('read-true');
   });
-  let readIcon = document.createElement('img');
-  readIcon.classList.add('book-card-icon', 'read-icon');
-  if (this.readStatus) {
-    readIcon.src = './icons/book-check.svg';
-  } else {
-    readIcon.src = './icons/book-cancel.svg';
-  }
-  readBookButton.appendChild(readIcon);
   buttonsCardContainer.appendChild(readBookButton);
   //assembly
   bookCard.appendChild(buttonsCardContainer);
