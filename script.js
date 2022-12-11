@@ -14,7 +14,6 @@ Book.prototype.add = function () {
 function createBookCard(book) {
   const bookCard = document.createElement('div');
   bookCard.className = 'book-card';
-
   let bookCardTitle = document.createElement('h2');
   bookCardTitle.textContent = book.title;
   bookCard.appendChild(bookCardTitle);
@@ -36,7 +35,7 @@ function createBookCard(book) {
   buttonsCardContainer.appendChild(deleteBookButton);
   //read status
   let readBookButton = document.createElement('button');
-  if (this.readStatus) {
+  if (book.readStatus) {
     readBookButton.classList.add(
       'book-card-button',
       'read-button',
@@ -46,7 +45,9 @@ function createBookCard(book) {
     readBookButton.classList.add('book-card-button', 'read-button');
   }
   readBookButton.addEventListener('click', () => {
-    readBookButton.classList.toggle('read-true');
+    myLibrary[bookCard.dataset.bookId].readStatus =
+      !myLibrary[bookCard.dataset.bookId].readStatus;
+    displayMyLibrary();
   });
   buttonsCardContainer.appendChild(readBookButton);
   //assembly
@@ -130,6 +131,7 @@ function stopDefAction(evt) {
 }
 
 function submitListener() {
+  const form = document.querySelector('form');
   const addBookSubmitButton = document.getElementById('add-book-submit');
   addBookSubmitButton.addEventListener('click', stopDefAction, false);
   const title = document.querySelector('#book-title');
@@ -145,6 +147,7 @@ function submitListener() {
     );
     newBook.add();
     displayMyLibrary();
+    form.reset();
   });
 }
 
