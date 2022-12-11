@@ -8,23 +8,30 @@ function Book(title, author, numberOfPages, readStatus) {
 }
 
 Book.prototype.add = function () {
-  myLibrary.push(this.title);
+  myLibrary.push(this);
 };
 
-Book.prototype.createBookCard = function () {
-  const container = document.querySelector('.container');
-  let bookCard = document.createElement('div');
+function createBookCard(book) {
+  const bookCard = document.createElement('div');
   bookCard.className = 'book-card';
+
   let bookCardTitle = document.createElement('h2');
-  bookCardTitle.textContent = this.title;
+  bookCardTitle.textContent = book.title;
   bookCard.appendChild(bookCardTitle);
+  let bookCardAuthor = document.createElement('p');
+  bookCardAuthor.textContent = book.author;
+  bookCard.appendChild(bookCardAuthor);
+  let bookCardPages = document.createElement('p');
+  bookCardPages.textContent = book.numberOfPages + 'pg';
+  bookCard.appendChild(bookCardPages);
   // buttons
   let buttonsCardContainer = document.createElement('div');
   //delete
   let deleteBookButton = document.createElement('button');
   deleteBookButton.classList.add('book-card-button', 'delete-button');
   deleteBookButton.addEventListener('click', () => {
-    deleteBookButton.parentElement.parentElement.remove();
+    myLibrary.splice(bookCard.dataset.bookId, 1);
+    displayMyLibrary();
   });
   buttonsCardContainer.appendChild(deleteBookButton);
   //read status
@@ -39,14 +46,23 @@ Book.prototype.createBookCard = function () {
     readBookButton.classList.add('book-card-button', 'read-button');
   }
   readBookButton.addEventListener('click', () => {
-    console.log('click');
     readBookButton.classList.toggle('read-true');
   });
   buttonsCardContainer.appendChild(readBookButton);
   //assembly
   bookCard.appendChild(buttonsCardContainer);
-  container.appendChild(bookCard);
-};
+  return bookCard;
+}
+
+function displayMyLibrary() {
+  const container = document.querySelector('.container');
+  container.textContent = '';
+  for (let book in myLibrary) {
+    let bookCard = createBookCard(myLibrary[book]);
+    bookCard.dataset.bookId = book;
+    container.appendChild(bookCard);
+  }
+}
 
 function createModal() {
   const modal = document.createElement('div');
@@ -128,7 +144,7 @@ function submitListener() {
       readStatus.checked
     );
     newBook.add();
-    newBook.createBookCard();
+    displayMyLibrary();
   });
 }
 
