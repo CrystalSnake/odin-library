@@ -1,15 +1,16 @@
 let myLibrary = [];
 
-function Book(title, author, numberOfPages, readStatus) {
-  this.title = title;
-  this.author = author;
-  this.numberOfPages = numberOfPages;
-  this.readStatus = readStatus;
+class Book {
+  constructor(title, author, numberOfPages, readStatus) {
+    this.title = title;
+    this.author = author;
+    this.numberOfPages = numberOfPages;
+    this.readStatus = readStatus;
+  }
+  add() {
+    myLibrary.push(this);
+  }
 }
-
-Book.prototype.add = function () {
-  myLibrary.push(this);
-};
 
 function createBookCard(book) {
   const bookCard = document.createElement('div');
