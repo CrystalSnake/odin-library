@@ -80,22 +80,24 @@ function createModal() {
 			</div>
 			<div class="modal-body">
 			<div class="form-container">
-			<form action="#" id="add-book-form" method="post">
+			<form name="add-book" action="#" id="add-book-form" method="post novalidate">
 				<legend>Please fill all field below, then press "Add" button.</legend>
 				<div class="modal-input">
 					<label for="book-title">Book title</label>
-					<input type="text" name="book-title" id="book-title" required />
+					<input type="text" minlength="3" maxlength="50" name="book-title" id="book-title" required />
 				</div>
 		
 				<div class="modal-input">
 					<label for="book-author">Book author</label>
-					<input type="text" name="book-author" id="book-author" required />
+					<input type="text" minlength="3" maxlength="30" name="book-author" id="book-author" required />
 				</div>
 		
 				<div class="modal-input">
 					<label for="book-number-of-pages">Number of pages</label>
 					<input
 						type="number"
+						min="1"
+						max="5000"
 						name="book-number-of-pages"
 						id="book-number-of-pages"
 						required
@@ -104,7 +106,7 @@ function createModal() {
 
 				<div class="modal-input checkbox">
 					<label for="book-read-status">Have you read it?</label>
-					<input type="checkbox" name="book-read-status" id="book-read-status" required />
+					<input type="checkbox" name="book-read-status" id="book-read-status" />
 				</div>
 		
 			</form>
@@ -127,19 +129,15 @@ function closeModalHandler() {
   });
 }
 
-function stopDefAction(evt) {
-  evt.preventDefault();
-}
-
 function submitListener() {
-  const form = document.querySelector('form');
-  const addBookSubmitButton = document.getElementById('add-book-submit');
-  addBookSubmitButton.addEventListener('click', stopDefAction, false);
-  const title = document.querySelector('#book-title');
-  const author = document.querySelector('#book-author');
-  const numberOfPages = document.querySelector('#book-number-of-pages');
-  const readStatus = document.querySelector('#book-read-status');
-  addBookSubmitButton.addEventListener('click', () => {
+  const form = document.forms['add-book'];
+  const addBookSubmitButton = form.elements['add-book-submit'];
+  const title = form.elements['book-title'];
+  const author = form.elements['book-author'];
+  const numberOfPages = form.elements['book-number-of-pages'];
+  const readStatus = form.elements['book-read-status'];
+  addBookSubmitButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
     let newBook = new Book(
       title.value,
       author.value,
