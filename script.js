@@ -59,11 +59,11 @@ function createBookCard(book) {
 function displayMyLibrary() {
   const container = document.querySelector('.container');
   container.textContent = '';
-  for (let book in myLibrary) {
-    let bookCard = createBookCard(myLibrary[book]);
-    bookCard.dataset.bookId = book;
+  myLibrary.forEach((item, index) => {
+    let bookCard = createBookCard(item);
+    bookCard.dataset.bookId = index;
     container.appendChild(bookCard);
-  }
+  });
 }
 
 function createModal() {
