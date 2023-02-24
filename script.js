@@ -1,4 +1,14 @@
-const myLibrary = [];
+const myLibrary = JSON.parse(localStorage.getItem('books')) || [];
+
+function removeBook(id) {
+  myLibrary.splice(id, 1);
+  localStorage.setItem('books', JSON.stringify(myLibrary));
+}
+
+function readStatusChange(id) {
+  myLibrary[id].readStatus = !myLibrary[id].readStatus;
+  localStorage.setItem('books', JSON.stringify(myLibrary));
+}
 
 class Book {
   constructor(title, author, numberOfPages, readStatus) {
@@ -10,12 +20,6 @@ class Book {
   add() {
     myLibrary.push(this);
   }
-  remove(id) {
-    myLibrary.splice(id, 1);
-  }
-  readStatusChange(id) {
-    myLibrary[id].readStatus = !myLibrary[id].readStatus;
-  }
 }
 
 const addBookButton = document.getElementById('add-book');
@@ -24,6 +28,7 @@ addBookButton.addEventListener('click', () => createModal());
 function createBook(title, author, numberOfPages, readStatus) {
   const newBook = new Book(title, author, numberOfPages, readStatus);
   newBook.add();
+  localStorage.setItem('books', JSON.stringify(myLibrary));
   myLibrary.sort((a, b) => a.title.localeCompare(b.title));
   displayMyLibrary();
 }
@@ -46,7 +51,7 @@ function createBookCard(book) {
   const deleteBookButton = document.createElement('button');
   deleteBookButton.classList.add('book-card-button', 'delete-button');
   deleteBookButton.addEventListener('click', () => {
-    book.remove(bookCard.dataset.bookId);
+    removeBook(bookCard.dataset.bookId);
     displayMyLibrary();
   });
   buttonsCardContainer.appendChild(deleteBookButton);
@@ -62,7 +67,7 @@ function createBookCard(book) {
     readBookButton.classList.add('book-card-button', 'read-button');
   }
   readBookButton.addEventListener('click', () => {
-    book.readStatusChange(bookCard.dataset.bookId);
+    readStatusChange(bookCard.dataset.bookId);
     displayMyLibrary();
   });
   buttonsCardContainer.appendChild(readBookButton);
@@ -211,3 +216,5 @@ function validateForm() {
     form.reset();
   }
 }
+
+displayMyLibrary();
