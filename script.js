@@ -139,6 +139,7 @@ addBookButton.addEventListener('click', () => createModal());
 function createBook(title, author, numberOfPages, readStatus) {
   const newBook = new Book(title, author, numberOfPages, readStatus);
   newBook.add();
+  myLibrary.sort((a, b) => a.title.localeCompare(b.title));
   displayMyLibrary();
 }
 
