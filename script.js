@@ -121,6 +121,11 @@ function createModal() {
   );
   document.body.appendChild(modal);
 
+  const closeModalButton = document.getElementById('close-modal');
+  closeModalButton.addEventListener('click', (evt) => {
+    evt.target.closest('.modal').remove();
+  });
+
   const form = document.forms['add-book'];
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -128,12 +133,8 @@ function createModal() {
   });
 }
 
-function closeModalHandler() {
-  const closeModalButton = document.getElementById('close-modal');
-  closeModalButton.addEventListener('click', () => {
-    document.body.removeChild(document.body.lastChild);
-  });
-}
+const addBookButton = document.getElementById('add-book');
+addBookButton.addEventListener('click', () => createModal());
 
 function createBook(title, author, numberOfPages, readStatus) {
   const newBook = new Book(title, author, numberOfPages, readStatus);
@@ -204,13 +205,3 @@ function validateForm() {
     form.reset();
   }
 }
-
-const addBookButton = document.getElementById('add-book');
-addBookButton.addEventListener(
-  'click',
-  () => {
-    createModal();
-    closeModalHandler();
-  },
-  false
-);
