@@ -1,4 +1,4 @@
-let myLibrary = [];
+const myLibrary = [];
 
 class Book {
   constructor(title, author, numberOfPages, readStatus) {
@@ -15,19 +15,19 @@ class Book {
 function createBookCard(book) {
   const bookCard = document.createElement('div');
   bookCard.className = 'book-card';
-  let bookCardTitle = document.createElement('h2');
+  const bookCardTitle = document.createElement('h2');
   bookCardTitle.textContent = book.title;
   bookCard.appendChild(bookCardTitle);
-  let bookCardAuthor = document.createElement('p');
+  const bookCardAuthor = document.createElement('p');
   bookCardAuthor.textContent = book.author;
   bookCard.appendChild(bookCardAuthor);
-  let bookCardPages = document.createElement('p');
-  bookCardPages.textContent = book.numberOfPages + 'pg';
+  const bookCardPages = document.createElement('p');
+  bookCardPages.textContent = book.numberOfPages + ' pg';
   bookCard.appendChild(bookCardPages);
   // buttons
-  let buttonsCardContainer = document.createElement('div');
+  const buttonsCardContainer = document.createElement('div');
   //delete
-  let deleteBookButton = document.createElement('button');
+  const deleteBookButton = document.createElement('button');
   deleteBookButton.classList.add('book-card-button', 'delete-button');
   deleteBookButton.addEventListener('click', () => {
     myLibrary.splice(bookCard.dataset.bookId, 1);
@@ -35,7 +35,7 @@ function createBookCard(book) {
   });
   buttonsCardContainer.appendChild(deleteBookButton);
   //read status
-  let readBookButton = document.createElement('button');
+  const readBookButton = document.createElement('button');
   if (book.readStatus) {
     readBookButton.classList.add(
       'book-card-button',
@@ -60,7 +60,7 @@ function displayMyLibrary() {
   const container = document.querySelector('.container');
   container.textContent = '';
   myLibrary.forEach((item, index) => {
-    let bookCard = createBookCard(item);
+    const bookCard = createBookCard(item);
     bookCard.dataset.bookId = index;
     container.appendChild(bookCard);
   });
@@ -80,7 +80,7 @@ function createModal() {
 			</div>
 			<div class="modal-body">
 			<div class="form-container">
-			<form name="add-book" action="#" id="add-book-form" method="post novalidate">
+			<form novalidate name="add-book" action="#" id="add-book-form" method="post ">
 				<legend>Please fill all field below, then press "Add" button.</legend>
 				<div class="modal-input">
 					<label for="book-title">Book title</label>
@@ -120,6 +120,12 @@ function createModal() {
 	`
   );
   document.body.appendChild(modal);
+
+  const form = document.forms['add-book'];
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    validateForm();
+  });
 }
 
 function closeModalHandler() {
@@ -129,29 +135,82 @@ function closeModalHandler() {
   });
 }
 
-function submitListener() {
+function createBook(title, author, numberOfPages, readStatus) {
+  const newBook = new Book(title, author, numberOfPages, readStatus);
+  newBook.add();
+  displayMyLibrary();
+}
+
+function validateTitle(input) {
+  if (input.validity.valueMissing) {
+    input.setCustomValidity('Book title is required');
+  } else if (input.validity.tooShort) {
+    input.setCustomValidity('Book title is too short. Min length 3');
+  } else if (input.validity.tooLong) {
+    input.setCustomValidity('Book title is too short. Max length 50');
+  } else {
+    input.setCustomValidity('');
+  }
+}
+
+function validateAuthor(input) {
+  if (input.validity.valueMissing) {
+    input.setCustomValidity('Book author is required');
+  } else if (input.validity.tooShort) {
+    input.setCustomValidity('Book author is too short. Min length 3');
+  } else if (input.validity.tooLong) {
+    input.setCustomValidity('Book author is too short. Max length 30');
+  } else {
+    input.setCustomValidity('');
+  }
+}
+
+function validatePages(input) {
+  if (input.validity.valueMissing) {
+    input.setCustomValidity('Number of pages is required');
+  } else if (input.validity.rangeUnderflow) {
+    input.setCustomValidity(
+      'The number of pages is too small. Minimum number of pages 1'
+    );
+  } else if (input.validity.rangeOverflow) {
+    input.setCustomValidity(
+      'The number of pages is too large. Maximum number of pages 5000'
+    );
+  } else if (input.validity.stepMismatch) {
+    input.setCustomValidity('The number of pages must be integer');
+  } else {
+    input.setCustomValidity('');
+  }
+}
+
+function validateForm() {
   const form = document.forms['add-book'];
-  const addBookSubmitButton = form.elements['add-book-submit'];
   const title = form.elements['book-title'];
   const author = form.elements['book-author'];
   const numberOfPages = form.elements['book-number-of-pages'];
   const readStatus = form.elements['book-read-status'];
-  addBookSubmitButton.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    let newBook = new Book(
+
+  validateTitle(title);
+  validateAuthor(author);
+  validatePages(numberOfPages);
+  form.reportValidity();
+  if (form.checkValidity()) {
+    createBook(
       title.value,
       author.value,
       numberOfPages.value,
       readStatus.checked
     );
-    newBook.add();
-    displayMyLibrary();
     form.reset();
-  });
+  }
 }
 
 const addBookButton = document.getElementById('add-book');
-
-addBookButton.addEventListener('click', createModal, false);
-addBookButton.addEventListener('click', closeModalHandler, false);
-addBookButton.addEventListener('click', submitListener, false);
+addBookButton.addEventListener(
+  'click',
+  () => {
+    createModal();
+    closeModalHandler();
+  },
+  false
+);
