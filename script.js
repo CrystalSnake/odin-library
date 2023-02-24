@@ -10,6 +10,22 @@ class Book {
   add() {
     myLibrary.push(this);
   }
+  remove(id) {
+    myLibrary.splice(id, 1);
+  }
+  readStatusChange(id) {
+    myLibrary[id].readStatus = !myLibrary[id].readStatus;
+  }
+}
+
+const addBookButton = document.getElementById('add-book');
+addBookButton.addEventListener('click', () => createModal());
+
+function createBook(title, author, numberOfPages, readStatus) {
+  const newBook = new Book(title, author, numberOfPages, readStatus);
+  newBook.add();
+  myLibrary.sort((a, b) => a.title.localeCompare(b.title));
+  displayMyLibrary();
 }
 
 function createBookCard(book) {
@@ -30,7 +46,7 @@ function createBookCard(book) {
   const deleteBookButton = document.createElement('button');
   deleteBookButton.classList.add('book-card-button', 'delete-button');
   deleteBookButton.addEventListener('click', () => {
-    myLibrary.splice(bookCard.dataset.bookId, 1);
+    book.remove(bookCard.dataset.bookId);
     displayMyLibrary();
   });
   buttonsCardContainer.appendChild(deleteBookButton);
@@ -46,8 +62,7 @@ function createBookCard(book) {
     readBookButton.classList.add('book-card-button', 'read-button');
   }
   readBookButton.addEventListener('click', () => {
-    myLibrary[bookCard.dataset.bookId].readStatus =
-      !myLibrary[bookCard.dataset.bookId].readStatus;
+    book.readStatusChange(bookCard.dataset.bookId);
     displayMyLibrary();
   });
   buttonsCardContainer.appendChild(readBookButton);
@@ -131,16 +146,6 @@ function createModal() {
     evt.preventDefault();
     validateForm();
   });
-}
-
-const addBookButton = document.getElementById('add-book');
-addBookButton.addEventListener('click', () => createModal());
-
-function createBook(title, author, numberOfPages, readStatus) {
-  const newBook = new Book(title, author, numberOfPages, readStatus);
-  newBook.add();
-  myLibrary.sort((a, b) => a.title.localeCompare(b.title));
-  displayMyLibrary();
 }
 
 function validateTitle(input) {
